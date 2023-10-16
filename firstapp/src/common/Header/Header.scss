@@ -1,0 +1,87 @@
+@import "../../styles/variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Inter:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600,700");
+
+.navbar {
+  padding: 20px 0px;
+  @include flex(row, space-between);
+  .leftpart {
+    @include flex(row, center, center);
+    .logo {
+      cursor: pointer;
+      font-family: "Poppins";
+      @include text-style(30px, 700, 22px);
+      margin-right: 50px;
+    }
+    .links {
+      cursor: pointer;
+      color: #979a9b;
+      font-family: "Inter";
+      @include text-style(16px, 700, 16px);
+      @include flex(row, center, center);
+      gap: 30px;
+      .men,
+      .women,
+      .collec,
+      .sale {
+        transition: .8s;
+        padding: 14px;
+        &:hover {
+          color: #262b2c;
+        }
+      }
+    }
+  }
+  .rightpart {
+    @include flex(row, center, center);
+    .info {
+      cursor: pointer;
+      color: #979a9b;
+      font-family: "Inter";
+      @include text-style(16px, 700, 16px);
+      @include flex(row, center, center);
+      gap: 30px;
+      .ourstory,
+      .contact {
+        transition: .8s;
+        padding: 14px;
+        &:hover {
+          color: #262b2c;
+        }
+      }
+    }
+    .cartprofile {
+      margin-left: 30px;
+      @include text-style(16px, 700, 16px);
+      @include flex(row, center, center);
+      padding: 14px;
+      gap: 20px;
+      .css-tzssek-MuiSvgIcon-root {
+        color: #262b2c;
+      }
+      .shoppingbag {
+        position: relative;
+        .circle {
+          @include flex(row, center, center);
+          @include text-style(10px, 700, 12px);
+          text-align: center;
+          width: 20px;
+          height: 20px;
+          background-color: #ff6961;
+          border-radius: 20px;
+          color: white;
+          position: absolute;
+          top: -5px;
+          right: -5px;
+        }
+      }
+      .shoppingbag, .profile {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media(max-width: 768px) {
+
+}
