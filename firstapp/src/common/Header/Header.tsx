@@ -3,7 +3,7 @@ import "./Header.scss";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 import UtilService from "../../services/UtilService";
 import { useState } from "react";
@@ -12,11 +12,11 @@ import Drawer from "@mui/material/Drawer";
 const Header = () => {
   var isMobile = UtilService.isMobile();
   const [sidebarState, setSidebarState] = useState(false);
-  
+
   function toggleSidebar() {
     setSidebarState(!sidebarState);
   }
-  
+
   const sidebarContent = (
     <div className="sidebarcontent">
       <div className="close" onClick={toggleSidebar}>
@@ -32,16 +32,18 @@ const Header = () => {
         <div className="contact">Contact</div>
       </div>
     </div>
-  )
+  );
 
   return (
     <div className="navbar">
-      <Drawer anchor="left" open={sidebarState} onClose={toggleSidebar}>
-        {sidebarContent}
-      </Drawer>
-      <div className="hamburger" onClick={toggleSidebar}>
-        <MenuIcon fontSize="large"></MenuIcon>
-      </div>
+      {isMobile && (<div className="sidemenu">
+        <Drawer anchor="left" open={sidebarState} onClose={toggleSidebar}>
+          {sidebarContent}
+        </Drawer>
+        <div className="hamburger" onClick={toggleSidebar}>
+          <MenuIcon fontSize="large"></MenuIcon>
+        </div>
+      </div>)}
       <div className="leftpart">
         <div className="logo">WALES</div>
         {!isMobile && (

@@ -82,6 +82,11 @@
   }
 }
 
+
+
+@media (min-width: 767px) {
+}
+
 @media(max-width: 768px) {
   .navbar {
     @include flex(row, space-between, center);
