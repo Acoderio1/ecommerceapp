@@ -4,9 +4,9 @@
 
 .navbar {
   padding: 20px 0px;
-  @include flex(row, space-between);
+  @include flex(space-between, normal);
   .leftpart {
-    @include flex(row, center, center);
+    @include flex(center, center);
     .logo {
       cursor: pointer;
       font-family: "Poppins";
@@ -18,7 +18,7 @@
       color: #979a9b;
       font-family: "Inter";
       @include text-style(16px, 700, 16px);
-      @include flex(row, center, center);
+      @include flex(center, center);
       gap: 30px;
       .men,
       .women,
@@ -33,13 +33,13 @@
     }
   }
   .rightpart {
-    @include flex(row, center, center);
+    @include flex(center, center);
     .info {
       cursor: pointer;
       color: #979a9b;
       font-family: "Inter";
       @include text-style(16px, 700, 16px);
-      @include flex(row, center, center);
+      @include flex(center, center);
       gap: 30px;
       .ourstory,
       .contact {
@@ -53,7 +53,7 @@
     .cartprofile {
       margin-left: 30px;
       @include text-style(16px, 700, 16px);
-      @include flex(row, center, center);
+      @include flex(center, center);
       padding: 14px;
       gap: 20px;
       .css-tzssek-MuiSvgIcon-root {
@@ -62,7 +62,7 @@
       .shoppingbag {
         position: relative;
         .circle {
-          @include flex(row, center, center);
+          @include flex(center, center);
           @include text-style(10px, 700, 12px);
           text-align: center;
           width: 20px;
@@ -89,7 +89,7 @@
 
 @media(max-width: 768px) {
   .navbar {
-    @include flex(row, space-between, center);
+    @include flex(space-between, center);
     .leftpart {
       .logo {
         margin-right: 0px;

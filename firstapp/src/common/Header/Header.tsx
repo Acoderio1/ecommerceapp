@@ -1,13 +1,14 @@
+import { useState } from "react";
+
 import "./Header.scss";
 
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-
-import UtilService from "../../services/UtilService";
-import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
+
+import UtilService from "../../services/Utils";
+import LoginDialog from "../LoginDialog/LoginDialog";
 
 const Header = () => {
   var isMobile = UtilService.isMobile();
@@ -23,7 +24,7 @@ const Header = () => {
         <CloseIcon fontSize="large"></CloseIcon>
       </div>
       <div className="sidebarprofile">
-        <AccountCircleIcon fontSize="large" />
+        <LoginDialog/>
       </div>
       <div className="content">
         <div className="home">Home</div>
@@ -69,7 +70,7 @@ const Header = () => {
           </div>
           {!isMobile && (
             <div className="profile">
-              <AccountCircleIcon fontSize="large" />
+              <LoginDialog/>
             </div>
           )}
         </div>

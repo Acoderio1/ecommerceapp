@@ -1,0 +1,60 @@
+@import "../../styles/variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Inter:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600,700");
+
+
+.close {
+  padding: 15px;
+  text-align: end;
+  cursor: pointer;
+}
+
+.authform {
+  width: 400px;
+  padding: 20px;
+  font-family: "Poppins";
+  .title {
+    @include text-style(30px, 700, 30px);
+    margin-bottom: 40px;
+  }
+  .authformgroup {
+    .emailId,.password {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+    
+    .remembrpass {
+      margin-bottom: 30px;
+      @include flex(space-between, center);
+      FormControlLabel {
+        Checkbox {
+          font-family: "Poppins";
+        }
+      }
+    }
+    .submitbutton {
+      width: 100%;
+      @include flex(center, center);
+      Button {
+        width: 100%;
+        height: 50px;
+        font-family: "Poppins";
+      }
+    }
+    .register {
+      margin-top: 15px;
+      font-family: "Poppins";
+      @include flex(center, center);
+      .registerbutton {
+        font-weight: 600;
+        margin-left: 10px;
+        color: #262b2c;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
+  border-radius: 10px !important;
+}
