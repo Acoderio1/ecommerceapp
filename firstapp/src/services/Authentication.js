@@ -1,10 +1,10 @@
-import React from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -23,25 +23,17 @@ console.log(analytics);
 const auth = getAuth();
 
 const AuthService = {
-  registerUser: function (email: string, pass: string) {
-    createUserWithEmailAndPassword(auth, email, pass)
-      .then((userCredential) => {
-        const user = userCredential.user;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  registerUser: function (email, pass) {
+    return createUserWithEmailAndPassword(auth, email, pass)
   },
 
-  signinUser: function (email: string, pass: string) {
-    signInWithEmailAndPassword(auth, email, pass)
-      .then((userCredential) => {
-        const user = userCredential.user;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  signinUser: function (email, pass) {
+    return signInWithEmailAndPassword(auth, email, pass)
   },
+
+  signOutUser: function () {
+    return signOut(auth)
+  }
 };
 
 export default AuthService;

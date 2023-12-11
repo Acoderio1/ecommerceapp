@@ -19,15 +19,25 @@ import {
   Button,
 } from "@mui/material";
 
+
 function LoginDialog() {
+
+  // useEffect(() => {
+  //   if (isLoggedin) {
+  //     setIsLoggedIn(isLoggedin);
+  //   }
+  
+  // }, [])
+  
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [isFormValid, setIsFormValid] = useState<any>();
+  const [isFormValid, setIsFormValid] = useState();
   const [formType, setFormtype] = useState(false);
   const [inputValues, setInputValues] = useState({
     emailId: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [inputv, setInput] = useState([
     {
@@ -60,10 +70,15 @@ function LoginDialog() {
   ]);
 
   const createUser = async () => {
-    formType ? Utils.createUser(inputValues.emailId, inputValues.password): Utils.signInUser(inputValues.emailId, inputValues.password);
+    formType
+      ? Utils.createUser(inputValues.emailId, inputValues.password)
+      : Utils.signInUser(inputValues.emailId, inputValues.password);
+    // if (Variables.isloggedin) {
+    //   setDialogOpen(false);
+    // }
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setInputValues({ ...inputValues, [name]: value });
     setIsFormValid(validate(inputv, e.target));
@@ -72,21 +87,24 @@ function LoginDialog() {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const openDialog = () => setDialogOpen(!dialogOpen);
 
-  const validate = (inputv: any, value: any) => {
+  const validate = (inputv, value) => {
     var noError;
-    inputv.map((input: any) => {
+    inputv.map((input) => {
       if (value.name === input.name && input.name === "confirmPassword") {
         if (inputValues.password !== value.value) {
           setInput((prevState) => {
             const temp = [...prevState];
             temp.map((item) => {
               if (item.name === "confirmPassword") {
-                return (item.errorMessage = "passwords do not match"), (item.error = true);
+                return (
+                  (item.errorMessage = "passwords do not match"),
+                  (item.error = true)
+                );
               }
             });
             return temp;
           });
-          noError = false
+          noError = false;
         }
       }
       if (value.name === input.name) {
@@ -103,7 +121,7 @@ function LoginDialog() {
             });
             return temp;
           });
-          noError = false
+          noError = false;
         } else if (input.pattern && !input.regex.test(value.value)) {
           setInput((prevState) => {
             const temp = [...prevState];
@@ -117,22 +135,22 @@ function LoginDialog() {
             });
             return temp;
           });
-          noError = false
+          noError = false;
         } else {
           setInput((prevState) => {
             const temp = [...prevState];
             temp.map((item) => {
               if (item.name === input.name) {
-                return (item.errorMessage = ""), (item.error = false);
+                return (item.errorMessage = ""),(item.error = false);
               }
             });
             return temp;
           });
-          noError = true
+          noError = true;
         }
       }
     });
-    return noError
+    return noError;
   };
 
   const loginScreen = (
@@ -151,7 +169,7 @@ function LoginDialog() {
             onChange={handleChange}
             onBlur={handleChange}
           />
-          <span>{inputv[0].errorMessage}</span>
+          <span className="errorMessage">{inputv[0].errorMessage}</span>
         </FormControl>
         <FormControl className="password">
           <InputLabel htmlFor="password">Password</InputLabel>
@@ -176,7 +194,7 @@ function LoginDialog() {
             }
             onChange={handleChange}
           />
-          <span>{inputv[1].errorMessage}</span>
+          <span className="errorMessage">{inputv[1].errorMessage}</span>
         </FormControl>
         {formType && (
           <FormControl className="password">
@@ -191,7 +209,7 @@ function LoginDialog() {
               onBlur={handleChange}
               onChange={handleChange}
             />
-            <span>{inputv[2].errorMessage}</span>
+            <span className="errorMessage">{inputv[2].errorMessage}</span>
           </FormControl>
         )}
         <div className="remembrpass">
@@ -199,20 +217,30 @@ function LoginDialog() {
             control={<Checkbox defaultChecked />}
             label="Remember me"
           />
-          <div className="forgotpass">Forgot Password?</div>
+          {!formType && <div className="forgotpass">Forgot Password?</div>}
         </div>
         <div className="submitbutton">
-          <Button type="submit" onClick={createUser} variant="contained" disabled={!inputValues.emailId || !inputValues.password || (!inputValues.confirmPassword && formType) || !isFormValid }>
-          {formType ? "Register" : "Login"}
+          <Button
+            type="submit"
+            onClick={createUser}
+            variant="contained"
+            disabled={
+              !inputValues.emailId ||
+              !inputValues.password ||
+              (!inputValues.confirmPassword && formType) ||
+              !isFormValid
+            }
+          >
+            {formType ? "Register" : "Login"}
           </Button>
         </div>
         <div className="register">
-          Don't have an account?{" "}
+          {formType ? "Already have an account?" : "Don't have an account?"}
           <div
             className="registerbutton"
             onClick={(_) => setFormtype(!formType)}
           >
-            Register
+            {formType ? "Login" : "Register"}
           </div>
         </div>
       </div>
