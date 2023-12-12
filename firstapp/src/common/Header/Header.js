@@ -2,6 +2,7 @@ import { useState,useContext } from "react";
 
 import "./Header.scss";
 import GlobalContext from "../../GlobalContext";
+import { Link } from 'react-router-dom';
 
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -27,7 +28,7 @@ const Header = () => {
       </div>
       <div className="content">
         <div className="home">Home</div>
-        <div className="sale">Sale</div>
+        <Link className="sale" to="/products">Sale</Link>
         <div className="aboutus">AboutUs</div>
         <div className="contact">Contact</div>
       </div>
@@ -45,13 +46,13 @@ const Header = () => {
         </div>
       </div>)}
       <div className="leftpart">
-        <div className="logo">WALES</div>
+        <Link className="logo" to="/">WALES</Link>
         {!IsMobile() && (
           <div className="links">
-            <div className="men">Men</div>
-            <div className="women">Women</div>
-            <div className="collec">Collection</div>
-            <div className="sale">Sale</div>
+            <Link className="men" to="products">Men</Link>
+            <Link className="women" to="products">Women</Link>
+            <Link className="collec" to="products">Collection</Link>       
+            <Link className="sale" to="products">Sale</Link>                 
           </div>
         )}
       </div>

@@ -8,14 +8,19 @@
   .leftpart {
     @include flex(center, center);
     .logo {
+      color: black;
+      text-decoration: none !important;
       cursor: pointer;
       font-family: "Poppins";
       @include text-style(30px, 700, 22px);
       margin-right: 50px;
     }
     .links {
+      a {
+        text-decoration: none !important;
+        color: #979a9b;
+      }
       cursor: pointer;
-      color: #979a9b;
       font-family: "Inter";
       @include text-style(16px, 700, 16px);
       @include flex(center, center);
