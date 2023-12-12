@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 
 import "./Header.scss";
+import GlobalContext from "../../GlobalContext";
 
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Drawer from "@mui/material/Drawer";
-import UtilService from "../../services/Utils";
 import LoginDialog from "../LoginDialog/LoginDialog";
 
 const Header = () => {
-  var isMobile = UtilService.isMobile();
+  const { IsMobile } = useContext(GlobalContext);
   const [sidebarState, setSidebarState] = useState(false);
 
   function toggleSidebar() {
@@ -36,7 +36,7 @@ const Header = () => {
 
   return (
     <div className="navbar">
-      {isMobile && (<div className="sidemenu">
+      {IsMobile() && (<div className="sidemenu">
         <Drawer anchor="left" open={sidebarState} onClose={toggleSidebar}>
           {sidebarContent}
         </Drawer>
@@ -46,7 +46,7 @@ const Header = () => {
       </div>)}
       <div className="leftpart">
         <div className="logo">WALES</div>
-        {!isMobile && (
+        {!IsMobile() && (
           <div className="links">
             <div className="men">Men</div>
             <div className="women">Women</div>
@@ -56,7 +56,7 @@ const Header = () => {
         )}
       </div>
       <div className="rightpart">
-        {!isMobile && (
+        {!IsMobile() && (
           <div className="info">
             <div className="ourstory">ourStory</div>
             <div className="contact">Sale</div>
@@ -67,7 +67,7 @@ const Header = () => {
             <div className="circle">1</div>
             <ShoppingBagIcon fontSize="large" />
           </div>
-          {!isMobile && (
+          {!IsMobile() && (
             <div className="profile">
               <LoginDialog/>
             </div>

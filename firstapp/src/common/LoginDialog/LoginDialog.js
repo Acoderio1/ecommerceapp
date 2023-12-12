@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import "./LoginDialog.scss";
-
-import Utils from "../../services/Utils";
+import GlobalContext from "../../GlobalContext";
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Visibility from "@mui/icons-material/Visibility";
+import CloseIcon from "@mui/icons-material/Close";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   FormControl,
@@ -19,17 +19,8 @@ import {
   Button,
 } from "@mui/material";
 
-
 function LoginDialog() {
-
-  // useEffect(() => {
-  //   if (isLoggedin) {
-  //     setIsLoggedIn(isLoggedin);
-  //   }
-  
-  // }, [])
-  
-
+  const { isLoggedIn, CreateUser, SignInUser } = useContext(GlobalContext);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isFormValid, setIsFormValid] = useState();
@@ -71,11 +62,8 @@ function LoginDialog() {
 
   const createUser = async () => {
     formType
-      ? Utils.createUser(inputValues.emailId, inputValues.password)
-      : Utils.signInUser(inputValues.emailId, inputValues.password);
-    // if (Variables.isloggedin) {
-    //   setDialogOpen(false);
-    // }
+      ? CreateUser(inputValues.emailId, inputValues.password)
+      : SignInUser(inputValues.emailId, inputValues.password);
   };
 
   const handleChange = (e) => {
@@ -141,7 +129,7 @@ function LoginDialog() {
             const temp = [...prevState];
             temp.map((item) => {
               if (item.name === input.name) {
-                return (item.errorMessage = ""),(item.error = false);
+                return (item.errorMessage = ""), (item.error = false);
               }
             });
             return temp;
@@ -198,7 +186,7 @@ function LoginDialog() {
         </FormControl>
         {formType && (
           <FormControl className="password">
-            <InputLabel htmlFor="password">Confirm Password</InputLabel>
+            <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
             <OutlinedInput
               id="confirmPassword"
               name="confirmPassword"
@@ -250,11 +238,11 @@ function LoginDialog() {
   return (
     <div>
       <div className="sidebarprofile" onClick={openDialog}>
-        <AccountCircleIcon fontSize="large" />
+        <AccountCircleIcon className="profileIcon" fontSize="large" />
       </div>
-      <Dialog maxWidth="lg" open={dialogOpen}>
+      <Dialog maxWidth="lg" open={dialogOpen && !isLoggedIn}>
         <div className="close" onClick={openDialog}>
-          close
+          <CloseIcon>close</CloseIcon>
         </div>
         <div className="authform">{loginScreen}</div>
       </Dialog>
