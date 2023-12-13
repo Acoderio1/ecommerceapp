@@ -1,0 +1,91 @@
+@import "../../styles/variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Inter:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600,700");
+
+.homepagewrapper {
+  .firstfold {
+    @include flex(start, center);
+    position: relative;
+    width: 100%;
+    .firstfoldbanner {
+      width: 100%;
+      // filter: blur(1.5px);
+    }
+    .firstfoldcontent {
+      padding: 40px;
+      position: absolute;
+      color: white;
+      max-width: 550px;
+      .firstfoldheader {
+        font-family: "Poppins";
+        margin-bottom: 30px;
+        @include text-style(72px, 600, 70px);
+      }
+      .firstfoldsubtitle {
+        font-family: "Inter";
+        margin-bottom: 20px;
+        @include text-style(16px, 400, 16px);
+      }
+      .buttons {
+        @include flex(space-between, center);
+        width: 60%;
+        .mensbutton,
+        .womensbutton {
+          text-decoration: none;
+          padding: 18px 30px;
+          max-width: 180px;
+          height: 50px;
+          font-family: "Inter";
+          @include text-style(14px, 400, 14px);
+          background-color: black;
+          border: 1px solid white;
+          border-radius: 0px;
+          color: white;
+          &:hover {
+            background-color: white;
+            transition: .8s;
+            color: black;
+          }
+        }
+      }
+    }
+  }
+  .secondfold {
+    margin-top: 96px;
+    // padding: 0px 40px;
+    position: relative;
+    @include flex(center, center);
+    .secondfoldimg {
+      width: 50%;
+    }
+    .secondfoldcontent {
+      padding: 80px 64px;
+      max-width: 370px;
+      .aboutus {
+        margin-bottom: 30px;
+        @include text-style(14px, 400, 14px);
+        font-family: "Poppins";
+        color: #f6aa28;
+      }
+      .title {
+        margin-bottom: 30px;
+        @include text-style(40px, 400, 45px);
+        font-family: "Poppins";
+        color: #262b2c;
+      }
+      .subtitle {
+        margin-bottom: 20px;
+        @include text-style(18px, 400, 21px);
+        font-family: "Inter";
+        color: #262b2c;
+      }
+      .readmore {
+        @include text-style(14px, 400, 14px);
+        font-family: "Inter";
+        color: #262b2c;
+        text-decoration: underline #f6aa28;
+        text-underline-offset: 5px;
+      }
+    }
+  }
+}
