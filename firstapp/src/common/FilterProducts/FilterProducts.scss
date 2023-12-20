@@ -1,0 +1,49 @@
+@import "../../styles/variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Inter:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600,700");
+
+
+.productswrapper {
+  margin-top: 96px;
+  .title {
+    @include text-style(30px, 600, 35px);
+    font-family: "Poppins";
+    color: #262b2c;
+  }
+  .shoeslist {
+    padding: 30px;
+    margin-top: 40px;
+    @include flex(space-between,center);
+    width: 90%;
+    flex-wrap: wrap;
+    .shoecardwrapper {
+      cursor: pointer;
+      padding: 30px;
+      border-radius: 20px;
+      transition: .8s;
+      margin-bottom: 50px;
+      max-width: 360px;
+      text-align: start;
+      .imgwrapper {
+        margin-bottom: 20px;
+        .shoecardimg {
+          width: 300px;
+          height: 380px;
+          object-fit: contain;
+          border-radius: 20px;
+        }
+      }
+      .shoecardtitle {
+        margin-bottom: 10px;
+        @include text-style(20px, 600, 22px);
+        font-family: "Poppins";
+        color: #262b2c;
+      }
+      .shoecardprice {
+        @include text-style(18px, 600, 18px);
+        font-family: "Poppins";
+        color: #f6aa28;
+      }
+    }
+  }
+}

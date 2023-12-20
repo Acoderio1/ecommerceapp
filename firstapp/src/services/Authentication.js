@@ -4,7 +4,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -24,16 +24,41 @@ const auth = getAuth();
 
 const AuthService = {
   registerUser: function (email, pass) {
-    return createUserWithEmailAndPassword(auth, email, pass)
+    return createUserWithEmailAndPassword(auth, email, pass);
   },
 
   signinUser: function (email, pass) {
-    return signInWithEmailAndPassword(auth, email, pass)
+    return signInWithEmailAndPassword(auth, email, pass);
   },
 
   signOutUser: function () {
-    return signOut(auth)
-  }
+    return signOut(auth);
+  },
+
+  // download: function () {
+  //   products.forEach((item) => {
+  //     const myPicks = ref(storage, item.name + "/");
+  //     var imagelist = [];
+  //     listAll(myPicks)
+  //       .then(async (res) => {
+  //         const { items } = res;
+  //         items.map(async (items) => {
+  //           await getDownloadURL(items).then(res => {
+  //             imagelist.push(res)
+  //           }).then(() => {
+  //             if (imagelist.length > 3) {
+  //               item.images = imagelist
+  //               ApiService.addProducts(item)
+  //             }
+  //           })
+  //         })
+  //         console.log(item)
+  //       })
+  //       .catch((error) => {
+  //         // Uh-oh, an error occurred!
+  //       });
+  //   });
+  // },
 };
 
 export default AuthService;

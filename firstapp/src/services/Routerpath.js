@@ -1,6 +1,5 @@
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import { BrowserRouter, Outlet } from "react-router-dom";
 
 const Home = lazy(() => import("../pages/Home/Home"));
 const Browse = lazy(() => import("../pages/Products/Products"));
