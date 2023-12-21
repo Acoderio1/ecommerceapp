@@ -1,5 +1,7 @@
-import { useEffect, Suspense, React, lazy, useState } from "react";
+import { useEffect, Suspense, React, lazy, useState, useContext } from "react";
 import "./Home.scss";
+
+import GlobalContext from "../../GlobalContext";
 
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +19,8 @@ const FilterProducts = lazy(() =>
 );
 
 const Home = () => {
+  const { IsMobile } = useContext(GlobalContext);
+
   const [products, setProducts] = useState();
 
   let navigate = useNavigate();
@@ -50,10 +54,10 @@ const Home = () => {
         ></img>
         <div className="firstfoldcontent">
           <div className="firstfoldheader">Love the Planet we walk on.</div>
-          <div className="firstfoldsubtitle">
+          {!IsMobile && (<div className="firstfoldsubtitle">
             Bibendum fermentum, aenean donec pretium aliquam blandit tempor
             imperdiet arcu arcu ut nunc in dictum mauris at ut.
-          </div>
+          </div>)}
           <div className="buttons">
             <Button className="mensbutton" onClick={() => routeChange("mens")}>
               SHOP MEN
@@ -87,11 +91,11 @@ const Home = () => {
           <div className="readmore">Read More...</div>
         </div>
       </div>
-      <div className="bestsellers">
+      {/* <div className="bestsellers">
         <Suspense fallback={<div>Loading...</div>}>
           {products && <FilterProducts config={{products:products, title: "BestSellers"}}></FilterProducts>}
         </Suspense>
-      </div>
+      </div> */}
       <div className="menwomencard">
         <div className="mencard">
           <img className="cardbg" src={mensshoes} alt=""></img>
@@ -115,11 +119,11 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="newarrivals">
+      {/* <div className="newarrivals">
         <Suspense fallback={<div>Loading...</div>}>
           {products && <FilterProducts config={{products:products, title: "New Arrivals"}}></FilterProducts>}
         </Suspense>
-      </div>
+      </div> */}
     </div>
   );
 };

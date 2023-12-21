@@ -132,3 +132,55 @@
     }
   }
 }
+
+@media (max-width:768px){
+  .homepagewrapper {
+    .firstfold {
+      @include flex(flex-start);
+      .firstfoldbanner {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+      }
+      .firstfoldcontent {
+        height: 100%;
+        @include flex(center, center, column);
+        padding: 20px;
+        .firstfoldheader {
+          @include text-style(52px, 600, 52px);
+        }
+        .firstfoldsubtitle {
+          margin-top: 20px;
+        }
+        .buttons {
+          margin-top: 20px;
+          flex-direction: column;
+          .mensbutton {
+            margin-bottom: 20px;
+          }
+          .mensbutton, .womensbutton {
+            width: 180px;
+          }
+        }
+      }
+    }
+    .secondfold {
+      flex-direction: column;
+      .secondfoldimg {
+        width: 100%;
+      }
+      .secondfoldcontent {
+        padding: 30px;
+      }
+    }
+    .menwomencard {
+      margin-top: 30px;
+      flex-direction: column;
+      gap: 0px;
+      .mencard, .womencard {
+        height: 300px;
+        width: 100%;
+      }
+    }
+  }
+}

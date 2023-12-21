@@ -1,3 +1,9 @@
 .mainBody{
   margin: 0px 50px;
 }
+
+@media (max-width: 768px) {
+  .mainBody {
+    margin: 0px 20px;
+  }
+}
