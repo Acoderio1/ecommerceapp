@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 import firstfoldbanner from "../../assets/images/firstfoldbanner.png";
 import shoemodel from "../../assets/images/shoemodel.png";
+import mensshoes from "../../assets/images/menshoes.png";
+import womensshoes from "../../assets/images/womensshoes.png";
+
 
 import ApiService from "../../services/ApiService";
 
@@ -26,11 +29,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    ApiService.getProducts("limit=6")
+    ApiService.getProducts("limit=6&bestseller=true")
       .then(async (res) => {
         let data = await res.json();
         setProducts(data);
-        console.log(products);
       })
       .catch((e) => {
         console.log(e);
@@ -87,7 +89,35 @@ const Home = () => {
       </div>
       <div className="bestsellers">
         <Suspense fallback={<div>Loading...</div>}>
-          {products && <FilterProducts config={products}></FilterProducts>}
+          {products && <FilterProducts config={{products:products, title: "BestSellers"}}></FilterProducts>}
+        </Suspense>
+      </div>
+      <div className="menwomencard">
+        <div className="mencard">
+          <img className="cardbg" src={mensshoes} alt=""></img>
+          <div className="cardcontent">
+            <div className="cardtitle">Men</div>
+            <Button className="mensbutton" onClick={() => routeChange("mens")}>
+              SHOP MEN
+            </Button>
+          </div>
+        </div>
+        <div className="womencard">
+          <img className="cardbg" src={womensshoes} alt=""></img>
+          <div className="cardcontent">
+            <div className="cardtitle">Women</div>
+            <Button
+              className="mensbutton"
+              onClick={() => routeChange("womens")}
+            >
+              SHOP WOMEN
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="newarrivals">
+        <Suspense fallback={<div>Loading...</div>}>
+          {products && <FilterProducts config={{products:products, title: "New Arrivals"}}></FilterProducts>}
         </Suspense>
       </div>
     </div>

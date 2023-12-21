@@ -3,9 +3,9 @@ import "./FilterProducts.scss";
 const FilterProducts = (config) => {
   return (
     <div className="productswrapper">
-      <div className="title">Best Sellers</div>
+      <div className="title">{config.config.title}</div>
       <div className="shoeslist">
-        {Object.values(config.config).map((item) => (
+        {Object.values(config.config.products).map((item) => (
           <div key={item._id} className="shoecardwrapper">
             <div className="imgwrapper">
               <img

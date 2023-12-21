@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const CartModel = require('../models/CartModel')
 
 const authSchema = new Schema({
   emailId: {
@@ -13,6 +14,9 @@ const authSchema = new Schema({
   username: {
     type: String,
     required: true
+  },
+  cart: {
+    type: {}
   }
 }, {timestamps: true})
 

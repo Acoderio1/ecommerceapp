@@ -87,7 +87,48 @@
       }
     }
   }
-  .bestsellers {
+  .bestsellers, .newarrivals {
     width: 100%;
+  }
+  .menwomencard {
+    width: 100%;
+    @include flex(center, center);
+    gap: 50px;
+    .mencard, .womencard {
+      @include flex(center, center);
+      position: relative;
+      height: 600px;
+      width: 50%;
+      .cardbg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cardcontent {
+        text-align: center;
+        position: absolute;
+        .cardtitle {
+          @include text-style(40px, 600, 45px);
+          color: white;
+          font-family: "Poppins";
+          margin-bottom: 20px;
+        }
+        .mensbutton,.womensbutton {
+          text-decoration: none;
+          padding: 30px 60px;
+          height: 50px;
+          font-family: "Inter";
+          @include text-style(14px, 600, 14px);
+          border: 1px solid white;
+          color: white;
+          border-radius: 0px;
+          &:hover {
+            background-color: white;
+            transition: .8s;
+            color: black;
+          }
+        }
+      }
+    }
   }
 }
