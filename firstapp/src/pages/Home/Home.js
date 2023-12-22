@@ -91,11 +91,11 @@ const Home = () => {
           <div className="readmore">Read More...</div>
         </div>
       </div>
-      {/* <div className="bestsellers">
+      <div className="bestsellers">
         <Suspense fallback={<div>Loading...</div>}>
           {products && <FilterProducts config={{products:products, title: "BestSellers"}}></FilterProducts>}
         </Suspense>
-      </div> */}
+      </div>
       <div className="menwomencard">
         <div className="mencard">
           <img className="cardbg" src={mensshoes} alt=""></img>
@@ -119,11 +119,11 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* <div className="newarrivals">
+      <div className="newarrivals">
         <Suspense fallback={<div>Loading...</div>}>
           {products && <FilterProducts config={{products:products, title: "New Arrivals"}}></FilterProducts>}
         </Suspense>
-      </div> */}
+      </div>
     </div>
   );
 };

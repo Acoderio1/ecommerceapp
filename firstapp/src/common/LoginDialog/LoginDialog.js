@@ -129,7 +129,7 @@ function LoginDialog() {
             const temp = [...prevState];
             temp.map((item) => {
               if (item.name === input.name) {
-                return (item.errorMessage = ""), (item.error = false);
+                return (item.errorMessage = "") (item.error = false);
               }
             });
             return temp;
