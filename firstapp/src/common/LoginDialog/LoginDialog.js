@@ -30,35 +30,6 @@ function LoginDialog() {
     password: "",
     confirmPassword: "",
   });
-  const [inputv, setInput] = useState([
-    {
-      id: 1,
-      name: "emailId",
-      errorMessage: "",
-      required: true,
-      error: false,
-      pattern: true,
-      regex: /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/,
-    },
-    {
-      id: 2,
-      name: "password",
-      errorMessage: "",
-      required: true,
-      error: false,
-      pattern: true,
-      regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/,
-    },
-    {
-      id: 3,
-      name: "confirmPassword",
-      errorMessage: "",
-      required: true,
-      error: false,
-      pattern: true,
-      regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/,
-    },
-  ]);
 
   const createUser = async () => {
     formType
@@ -66,79 +37,75 @@ function LoginDialog() {
       : SignInUser(inputValues.emailId, inputValues.password);
   };
 
+  const [inputconfig] = useState({
+    emailId: {
+      name: "emailId",
+      errorMessage: "",
+      required: true,
+      error: false,
+      pattern: true,
+      regex: /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/,
+    },
+    password: {
+      name: "password",
+      errorMessage: "",
+      required: true,
+      error: false,
+      pattern: true,
+      regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/,
+    },
+    confirmPassword: {
+      name: "confirmPassword",
+      errorMessage: "",
+      required: true,
+      error: false,
+      pattern: true,
+      regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/,
+    },
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputValues({ ...inputValues, [name]: value });
-    setIsFormValid(validate(inputv, e.target));
+    validate(e.target)
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const openDialog = () => setDialogOpen(!dialogOpen);
 
-  const validate = (inputv, value) => {
-    var noError;
-    inputv.map((input) => {
-      if (value.name === input.name && input.name === "confirmPassword") {
-        if (inputValues.password !== value.value) {
-          setInput((prevState) => {
-            const temp = [...prevState];
-            temp.map((item) => {
-              if (item.name === "confirmPassword") {
-                return (
-                  (item.errorMessage = "passwords do not match"),
-                  (item.error = true)
-                );
-              }
-            });
-            return temp;
-          });
-          noError = false;
-        }
-      }
-      if (value.name === input.name) {
-        if (input.required && !value.value) {
-          setInput((prevState) => {
-            const temp = [...prevState];
-            temp.map((item) => {
-              if (item.name === input.name) {
-                return (
-                  (item.errorMessage = input.name + " is required."),
-                  (item.error = true)
-                );
-              }
-            });
-            return temp;
-          });
-          noError = false;
-        } else if (input.pattern && !input.regex.test(value.value)) {
-          setInput((prevState) => {
-            const temp = [...prevState];
-            temp.map((item) => {
-              if (item.name === input.name) {
-                return (
-                  (item.errorMessage = "Please enter valid " + input.name),
-                  (item.error = true)
-                );
-              }
-            });
-            return temp;
-          });
-          noError = false;
-        } else {
-          setInput((prevState) => {
-            const temp = [...prevState];
-            temp.map((item) => {
-              if (item.name === input.name) {
-                return (item.errorMessage = "") (item.error = false);
-              }
-            });
-            return temp;
-          });
-          noError = true;
-        }
+  const validate = (value) => {
+    Object.values(inputconfig).map((input) => {
+      switch (true) {
+        case (input.name === "emailId") && (value.name === "emailId"):
+          if (!input.regex.test(value.value)) {
+            input.errorMessage = "Please enter valid email id";
+            setIsFormValid(false)
+            break;
+          }
+          input.errorMessage = "";
+          setIsFormValid(true)
+          break;
+        case (input.name === "password") && (value.name === "password"):
+          if (!input.regex.test(value.value)) {
+            input.errorMessage = "Please enter valid password";
+            setIsFormValid(false)
+            break;
+          }
+          input.errorMessage = "";
+          setIsFormValid(true)
+          break;
+        case (input.name === "confirmPassword") && (value.name === "confirmPassword"):
+          if (inputValues.password !== value.value) {
+            input.errorMessage = "Passwords don't match";
+            setIsFormValid(false)
+            break;
+          }
+          input.errorMessage = "";
+          setIsFormValid(true)
+          break;
+        default:
       }
     });
-    return noError;
   };
 
   const loginScreen = (
@@ -151,13 +118,13 @@ function LoginDialog() {
             id="emailId"
             label="emailId"
             type="text"
-            error={inputv[0].error}
+            error={inputconfig.emailId.error}
             name="emailId"
             value={inputValues.emailId}
             onChange={handleChange}
             onBlur={handleChange}
           />
-          <span className="errorMessage">{inputv[0].errorMessage}</span>
+          <span className="errorMessage">{inputconfig.emailId.errorMessage}</span>
         </FormControl>
         <FormControl className="password">
           <InputLabel htmlFor="password">Password</InputLabel>
@@ -166,7 +133,7 @@ function LoginDialog() {
             name="password"
             label="password"
             value={inputValues.password}
-            error={inputv[1].error}
+            error={inputconfig.error}
             type={showPassword ? "text" : "password"}
             onBlur={handleChange}
             endAdornment={
@@ -182,7 +149,7 @@ function LoginDialog() {
             }
             onChange={handleChange}
           />
-          <span className="errorMessage">{inputv[1].errorMessage}</span>
+          <span className="errorMessage">{inputconfig.password.errorMessage}</span>
         </FormControl>
         {formType && (
           <FormControl className="password">
@@ -192,12 +159,12 @@ function LoginDialog() {
               name="confirmPassword"
               label="confirmPassword"
               value={inputValues.confirmPassword}
-              error={inputv[2].error}
+              error={inputconfig.error}
               type="password"
               onBlur={handleChange}
               onChange={handleChange}
             />
-            <span className="errorMessage">{inputv[2].errorMessage}</span>
+            <span className="errorMessage">{inputconfig.confirmPassword.errorMessage}</span>
           </FormControl>
         )}
         <div className="remembrpass">

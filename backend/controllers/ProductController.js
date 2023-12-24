@@ -25,7 +25,7 @@ const getProduct = async (req, res) => {
   excludeFields.forEach((item) => {
     delete querObj[item];
   })
-  const products = await Product.find(querObj).limit(req.query.limit);
+  const products = await Product.find(querObj).limit(req.query?.limit || "");
   if (!products) {
     return res.status(404).json({ error: "no products" });
   }

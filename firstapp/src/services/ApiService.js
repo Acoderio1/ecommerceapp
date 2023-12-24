@@ -1,7 +1,8 @@
 
 const ApiService = {
   getProducts : async (qparams) => {
-    return await fetch(process.env.REACT_APP_BASE_URL + `/products/get?${qparams}`)
+    console.log(qparams)
+    return await fetch(process.env.REACT_APP_BASE_URL + `/products/get?${qparams || ""}`)
   },
 
   addProducts : async (value) => {

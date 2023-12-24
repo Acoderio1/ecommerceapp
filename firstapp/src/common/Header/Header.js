@@ -1,8 +1,8 @@
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 
 import "./Header.scss";
 import GlobalContext from "../../GlobalContext";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -24,11 +24,13 @@ const Header = () => {
         <CloseIcon fontSize="large"></CloseIcon>
       </div>
       <div className="sidebarprofile">
-        <LoginDialog/>
+        <LoginDialog />
       </div>
       <div className="content">
         <div className="home">Home</div>
-        <Link className="sale" to="/products">Sale</Link>
+        <Link className="sale" to="/products">
+          Sale
+        </Link>
         <div className="aboutus">AboutUs</div>
         <div className="contact">Contact</div>
       </div>
@@ -37,22 +39,34 @@ const Header = () => {
 
   return (
     <div className="navbar">
-      {IsMobile() && (<div className="sidemenu">
-        <Drawer anchor="left" open={sidebarState} onClose={toggleSidebar}>
-          {sidebarContent}
-        </Drawer>
-        <div className="hamburger" onClick={toggleSidebar}>
-          <MenuIcon fontSize="large"></MenuIcon>
+      {IsMobile() && (
+        <div className="sidemenu">
+          <Drawer anchor="left" open={sidebarState} onClose={toggleSidebar}>
+            {sidebarContent}
+          </Drawer>
+          <div className="hamburger" onClick={toggleSidebar}>
+            <MenuIcon fontSize="large"></MenuIcon>
+          </div>
         </div>
-      </div>)}
+      )}
       <div className="leftpart">
-        <Link className="logo" to="/">WALES</Link>
+        <Link className="logo" to="/">
+          WALES
+        </Link>
         {!IsMobile() && (
           <div className="links">
-            <Link className="men" to="products">Men</Link>
-            <Link className="women" to="products">Women</Link>
-            <Link className="collec" to="products">Collection</Link>       
-            <Link className="sale" to="products">Sale</Link>                 
+            <Link className="men" to="/products?type=men">
+              Men
+            </Link>
+            <Link className="women" to="/products?type=women">
+              Women
+            </Link>
+            <Link className="collec" to="products">
+              Collection
+            </Link>
+            <Link className="sale" to="products">
+              Sale
+            </Link>
           </div>
         )}
       </div>
@@ -70,7 +84,7 @@ const Header = () => {
           </div>
           {!IsMobile() && (
             <div className="profile">
-              <LoginDialog/>
+              <LoginDialog />
             </div>
           )}
         </div>
