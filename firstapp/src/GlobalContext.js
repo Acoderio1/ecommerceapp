@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import AuthService from "./services/Authentication";
-import { useSearchParams } from "react-router-dom";
 export const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
@@ -20,7 +19,7 @@ export const GlobalContextProvider = ({ children }) => {
 
   const CreateUser = async (email, pass) => {
     AuthService.registerUser(email, pass)
-      .then((_) => {
+      .then((res) => {
         sessionStorage.setItem("userLoggedin", "true");
         setisLoggedIn(true);
         // console.log("user created");
@@ -55,15 +54,6 @@ export const GlobalContextProvider = ({ children }) => {
       });
   };
 
-  const GetqParams = () => {
-    const [searchParams] = useSearchParams();
-    const params = {};
-    for (let [key, value] of searchParams.entries()) {
-      params[key] = value;
-    }
-    return params
-  };
-
   return (
     <GlobalContext.Provider
       value={{
@@ -74,8 +64,7 @@ export const GlobalContextProvider = ({ children }) => {
         SignInUser,
         SignoutUser,
         pageName,
-        setPageName,
-        GetqParams
+        setPageName
       }}
     >
       {children}
