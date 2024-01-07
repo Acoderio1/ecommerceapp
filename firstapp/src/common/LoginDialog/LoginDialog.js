@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import "./LoginDialog.scss";
 import GlobalContext from "../../GlobalContext";
@@ -19,32 +19,37 @@ import {
   Button,
 } from "@mui/material";
 
+import { selectUser } from "../../features/userSlice";
+import { useSelector } from "react-redux";
+
 function LoginDialog() {
-  const { isLoggedIn, CreateUser, SignInUser } = useContext(GlobalContext);
+  const { CreateUser, SignInUser, userAuth, SignoutUser } = useContext(GlobalContext);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isFormValid, setIsFormValid] = useState();
-  const [formType, setFormtype] = useState(false);
+  const [isRegister, setIsRegister] = useState();
+  const user = useSelector(selectUser);
   const [inputValues, setInputValues] = useState({
+    fullName: "",
     emailId: "",
     password: "",
     confirmPassword: "",
   });
 
-  const createUser = async () => {
-    formType
-      ? CreateUser(inputValues.emailId, inputValues.password)
-      : SignInUser(inputValues.emailId, inputValues.password);
-  };
-
   const [inputconfig] = useState({
+    fullName: {
+      name: "fullName",
+      errorMessage: "",
+      required: true,
+      error: false,
+    },
     emailId: {
       name: "emailId",
       errorMessage: "",
       required: true,
       error: false,
       pattern: true,
-      regex: /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/,
+      regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     },
     password: {
       name: "password",
@@ -64,10 +69,18 @@ function LoginDialog() {
     },
   });
 
+  useEffect(() => {
+    userAuth();
+  }, []);
+
+  const createUser = async () => {
+    isRegister ? CreateUser(inputValues.fullName, inputValues.emailId, inputValues.password) : SignInUser(inputValues.emailId, inputValues.password);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputValues({ ...inputValues, [name]: value });
-    validate(e.target)
+    validate(e.target);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -76,32 +89,48 @@ function LoginDialog() {
   const validate = (value) => {
     Object.values(inputconfig).map((input) => {
       switch (true) {
-        case (input.name === "emailId") && (value.name === "emailId"):
+        case input.name === "fullName" && value.name === "fullName":
+          if (!value.value) {
+            input.errorMessage = "Please enter valid email id";
+            input.error = true;
+            break;
+          }
+          input.errorMessage = "";
+          input.error = false;
+          break;
+        case input.name === "emailId" && value.name === "emailId":
           if (!input.regex.test(value.value)) {
             input.errorMessage = "Please enter valid email id";
-            setIsFormValid(false)
+            input.error = true;
+            setIsFormValid(false);
             break;
           }
           input.errorMessage = "";
-          setIsFormValid(true)
+          input.error = false;
+          setIsFormValid(true);
           break;
-        case (input.name === "password") && (value.name === "password"):
+        case input.name === "password" && value.name === "password":
           if (!input.regex.test(value.value)) {
             input.errorMessage = "Please enter valid password";
-            setIsFormValid(false)
+            input.error = true;
+            setIsFormValid(false);
             break;
           }
           input.errorMessage = "";
-          setIsFormValid(true)
+          input.error = false;
+          setIsFormValid(true);
           break;
-        case (input.name === "confirmPassword") && (value.name === "confirmPassword"):
+        case input.name === "confirmPassword" &&
+          value.name === "confirmPassword":
           if (inputValues.password !== value.value) {
             input.errorMessage = "Passwords don't match";
-            setIsFormValid(false)
+            input.error = true;
+            setIsFormValid(false);
             break;
           }
           input.errorMessage = "";
-          setIsFormValid(true)
+          input.error = false;
+          setIsFormValid(true);
           break;
         default:
       }
@@ -110,10 +139,28 @@ function LoginDialog() {
 
   const loginScreen = (
     <div>
-      <div className="title">{formType ? "Register" : "Login"}</div>
+      <div className="title">{isRegister ? "Register" : "Login"}</div>
       <div className="authformgroup">
+        {isRegister && (
+          <FormControl className="fullName">
+            <InputLabel htmlFor="fullName">Full Name</InputLabel>
+            <OutlinedInput
+              id="fullName"
+              label="fullName"
+              type="text"
+              error={inputconfig.fullName.error}
+              name="fullName"
+              value={inputValues.fullName}
+              onChange={handleChange}
+              onBlur={handleChange}
+            />
+            <span className="errorMessage">
+              {inputconfig.fullName.errorMessage}
+            </span>
+          </FormControl>
+        )}
         <FormControl className="emailId">
-          <InputLabel htmlFor="emailId">EmailId</InputLabel>
+          <InputLabel htmlFor="emailId">Email Id</InputLabel>
           <OutlinedInput
             id="emailId"
             label="emailId"
@@ -124,7 +171,9 @@ function LoginDialog() {
             onChange={handleChange}
             onBlur={handleChange}
           />
-          <span className="errorMessage">{inputconfig.emailId.errorMessage}</span>
+          <span className="errorMessage">
+            {inputconfig.emailId.errorMessage}
+          </span>
         </FormControl>
         <FormControl className="password">
           <InputLabel htmlFor="password">Password</InputLabel>
@@ -149,9 +198,11 @@ function LoginDialog() {
             }
             onChange={handleChange}
           />
-          <span className="errorMessage">{inputconfig.password.errorMessage}</span>
+          <span className="errorMessage">
+            {inputconfig.password.errorMessage}
+          </span>
         </FormControl>
-        {formType && (
+        {isRegister && (
           <FormControl className="password">
             <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
             <OutlinedInput
@@ -164,7 +215,9 @@ function LoginDialog() {
               onBlur={handleChange}
               onChange={handleChange}
             />
-            <span className="errorMessage">{inputconfig.confirmPassword.errorMessage}</span>
+            <span className="errorMessage">
+              {inputconfig.confirmPassword.errorMessage}
+            </span>
           </FormControl>
         )}
         <div className="remembrpass">
@@ -172,7 +225,7 @@ function LoginDialog() {
             control={<Checkbox defaultChecked />}
             label="Remember me"
           />
-          {!formType && <div className="forgotpass">Forgot Password?</div>}
+          {!isRegister && <div className="forgotpass">Forgot Password?</div>}
         </div>
         <div className="submitbutton">
           <Button
@@ -182,36 +235,52 @@ function LoginDialog() {
             disabled={
               !inputValues.emailId ||
               !inputValues.password ||
-              (!inputValues.confirmPassword && formType) ||
+              (!inputValues.confirmPassword && isRegister) ||
               !isFormValid
             }
           >
-            {formType ? "Register" : "Login"}
+            {isRegister ? "Register" : "Login"}
           </Button>
         </div>
         <div className="register">
-          {formType ? "Already have an account?" : "Don't have an account?"}
+          {isRegister ? "Already have an account?" : "Don't have an account?"}
           <div
             className="registerbutton"
-            onClick={(_) => setFormtype(!formType)}
+            onClick={(_) => setIsRegister(!isRegister)}
           >
-            {formType ? "Login" : "Register"}
+            {isRegister ? "Login" : "Register"}
           </div>
         </div>
       </div>
     </div>
   );
 
+  const profileScreen = (
+    <div>
+      <div className="title">Profile</div>
+      <div className="profilewrapper">
+        <div className="profileicon"></div>
+        <div className="logout">
+          <Button
+            className="logout"
+            onClick={SignoutUser}
+          >
+            LOGOUT
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
   return (
     <div>
       <div className="sidebarprofile" onClick={openDialog}>
         <AccountCircleIcon className="profileIcon" fontSize="large" />
       </div>
-      <Dialog maxWidth="lg" open={dialogOpen && !isLoggedIn}>
+      <Dialog maxWidth="lg" open={dialogOpen}>
         <div className="close" onClick={openDialog}>
           <CloseIcon>close</CloseIcon>
         </div>
-        <div className="authform">{loginScreen}</div>
+        <div className="authform">{user ? profileScreen : loginScreen}</div>
       </Dialog>
     </div>
   );

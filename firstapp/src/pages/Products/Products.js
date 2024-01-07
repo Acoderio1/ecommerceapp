@@ -1,29 +1,31 @@
-import { useEffect, Suspense, React, lazy, useState } from "react";
+import { useEffect, Suspense, React, lazy, useContext } from "react";
 
 import ApiService from "../../services/ApiService";
+import GlobalContext from "../../GlobalContext";
+
 import { useSearchParams, useLocation } from "react-router-dom";
 
 const FilterProducts = lazy(() =>
   import("../../common/FilterProducts/FilterProducts")
 );
 const Products = () => {
-  const [config, setConfig] = useState({});
+  const { productConfig, setProductConfig } = useContext(GlobalContext);
   const location = useLocation();
   const [qparams] = useSearchParams(location);
   var payload = "";
   useEffect(() => {
     if (qparams.get("type") === "men") {
       payload = "type=men";
-      config["pageTitle"] = "Mens"
+      productConfig["pageTitle"] = "Mens"
      }
     if (qparams.get("type") === "women") {
       payload = "type=women";
-      config["pageTitle"] = "Womens"
+      productConfig["pageTitle"] = "Womens"
     }
     ApiService.getProducts(payload)
     .then(async (res) => {
       let data = await res.json();
-      setConfig({ ...config, ["products"]: data });
+      setProductConfig({ ...productConfig, ["products"]: data });
       })
       .catch((e) => {
         console.log(e);
@@ -33,9 +35,9 @@ const Products = () => {
   return (
     <div className="bestsellers">
       <Suspense fallback={<div>Loading...</div>}>
-        {config.products && (
+        {productConfig.products && (
           <FilterProducts
-            config={config}
+            config={productConfig}
           ></FilterProducts>
         )}
       </Suspense>

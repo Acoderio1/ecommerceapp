@@ -4,9 +4,13 @@
 
 
 .productswrapper {
+  @include flex(center, center, column);
+  padding: 0px 30px;
   margin-top: 96px;
   .title {
-    @include text-style(30px, 600, 35px);
+    width: 100%;
+    text-align: start;
+    @include text-style(35px, 600, 35px);
     font-family: "Poppins";
     color: #262b2c;
   }
@@ -25,15 +29,24 @@
       max-width: 360px;
       text-align: start;
       .imgwrapper {
+        @include flex(center, center);
+        position: relative;
         margin-bottom: 20px;
         .shoecardimg {
-          width: 300px;
-          height: 380px;
-          object-fit: contain;
+          width: 250px;
+          height: 250px;
+          object-fit: cover;
           border-radius: 15px;
+        }
+        .bookmark {
+          color: grey;
+          position: absolute;
+          right: 10px;
+          top: 10px;
         }
       }
       .shoecardtitle {
+        max-width: 180px;
         margin-bottom: 10px;
         @include text-style(20px, 600, 22px);
         font-family: "Poppins";

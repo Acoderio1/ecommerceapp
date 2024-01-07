@@ -2,8 +2,9 @@ import "./App.css";
 import Header from "./common/Header/Header";
 import { GlobalContextProvider } from "./GlobalContext";
 import RouterService from "./services/Routerpath";
-import { BrowserRouter, Outlet } from "react-router-dom";
-import { Suspense } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { Suspense, useContext } from "react";
+import GlobalContext from "../src/GlobalContext";
 
 function App() {
   return (

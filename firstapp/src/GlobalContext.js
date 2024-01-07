@@ -1,10 +1,16 @@
 import { createContext, useState } from "react";
 import AuthService from "./services/Authentication";
+import { useDispatch } from "react-redux";
+import { login } from "../src/features/userSlice";
+import ApiService from "./services/ApiService";
+
 export const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  // const [isLoggedIn, setisLoggedIn] = useState();
   const [pageName, setPageName] = useState();
+  const [productConfig, setProductConfig] = useState({});
+  const dispatch = useDispatch();
 
   const IsMobile = () => {
     if (
@@ -17,12 +23,29 @@ export const GlobalContextProvider = ({ children }) => {
     return false;
   };
 
-  const CreateUser = async (email, pass) => {
+  const userAuth = () => {
+    dispatch(login(sessionStorage.getItem("user")));
+  };
+
+  const CreateUser = async (name, email, pass) => {
     AuthService.registerUser(email, pass)
       .then((res) => {
-        sessionStorage.setItem("userLoggedin", "true");
-        setisLoggedIn(true);
-        // console.log("user created");
+        var payload = {
+          _id: res.user?.uid,
+          fullName: name,
+          emailId: res.user?.email,
+        };
+        dispatch(
+          login(payload)
+        );
+        ApiService.addUser(payload)
+          .then((_) => {
+            sessionStorage.setItem("userLoggedin", "true");
+            sessionStorage.setItem("user", JSON.stringify(payload));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         alert(error.message);
@@ -32,9 +55,14 @@ export const GlobalContextProvider = ({ children }) => {
 
   const SignInUser = async (email, pass) => {
     AuthService.signinUser(email, pass)
-      .then((_) => {
+      .then((res) => {
+        var payload = {
+          _id: res.user?.uid,
+          fullName: res.user.displayName,
+          emailId: res.user?.email,
+        };
         sessionStorage.setItem("userLoggedin", "true");
-        setisLoggedIn(true);
+        sessionStorage.setItem("user", JSON.stringify(payload));
         // console.log("userSigned IN");
       })
       .catch((error) => {
@@ -46,7 +74,7 @@ export const GlobalContextProvider = ({ children }) => {
     AuthService.signOutUser()
       .then((_) => {
         sessionStorage.setItem("userLoggedin", "false");
-        setisLoggedIn(false);
+        sessionStorage.removeItem("user");
         // console.log("userSigned OUT");
       })
       .catch((error) => {
@@ -57,14 +85,15 @@ export const GlobalContextProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        isLoggedIn,
-        setisLoggedIn,
         IsMobile,
         CreateUser,
         SignInUser,
         SignoutUser,
         pageName,
-        setPageName
+        setPageName,
+        productConfig,
+        setProductConfig,
+        userAuth,
       }}
     >
       {children}

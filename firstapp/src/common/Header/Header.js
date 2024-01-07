@@ -9,11 +9,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Drawer from "@mui/material/Drawer";
 import LoginDialog from "../LoginDialog/LoginDialog";
+import { selectUser } from "../../features/userSlice";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const { IsMobile } = useContext(GlobalContext);
   const [sidebarState, setSidebarState] = useState(false);
-
+  const user = useSelector(selectUser);
   function toggleSidebar() {
     setSidebarState(!sidebarState);
   }
@@ -64,9 +66,11 @@ const Header = () => {
             <Link className="collec" to="products">
               Collection
             </Link>
+            {user && (
             <Link className="sale" to="products">
               Sale
             </Link>
+            )}
           </div>
         )}
       </div>

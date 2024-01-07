@@ -1,0 +1,67 @@
+@import "../../styles/variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Inter:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600,700");
+
+.productwrapper {
+  margin: 30px;
+  .productbody {
+    @include flex(space-around, center);
+    .imagewrapper {
+      border-radius: 20px;
+      width: 500px;
+      margin-right: 30px;
+      .carousel-root {
+        border-radius: 20px;
+        .carousel.carousel-slider .control-arrow {
+          top: 300px !important;
+          height: 40px !important;
+          border-radius: 20px;
+        }
+      }
+      .productimage {
+        border-radius: 20px;
+      }
+    }
+    .content {
+      max-width: 40%;
+      .title {
+        @include text-style(30px, 600, 32px);
+        margin-bottom: 20px;
+      }
+      .price {
+        @include text-style(35px, 600, 35px);
+        margin-bottom:15px;
+      }
+      .desc {
+
+      }
+      .cartbtns {
+        margin-top: 20px;
+        @include flex(space-around, center);
+        .qtybtn {
+          padding: 10px;
+          @include flex(center, center);
+          .add, .remove {
+            cursor: pointer;
+          }
+          .count {
+            margin: 0px 25px;
+            @include text-style(25px, 600, 25px);
+          }
+        }
+        .cartbtn {
+          text-decoration: none;
+          padding: 18px 30px;
+          max-width: 180px;
+          height: 50px;
+          font-family: "Inter";
+          @include text-style(14px, 400, 14px);
+          background-color: black;
+          border: 1px solid white;
+          border-radius: 0px;
+          color: white;
+        }
+      }
+    }
+  }
+}

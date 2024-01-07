@@ -1,22 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const CartModel = require('../models/CartModel')
 
 const authSchema = new Schema({
+  _id: {
+    type: String
+  },
+  fullName: {
+    type: String,
+    required: true
+  },
   emailId: {
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  username: {
-    type: String,
-    required: true
-  },
   cart: {
-    type: {}
+    type: mongoose.Schema.Types.ObjectId, ref: 'CartModel',
   }
 }, {timestamps: true})
 

@@ -11,7 +11,6 @@ import shoemodel from "../../assets/images/shoemodel.png";
 import mensshoes from "../../assets/images/menshoes.png";
 import womensshoes from "../../assets/images/womensshoes.png";
 
-
 import ApiService from "../../services/ApiService";
 
 const FilterProducts = lazy(() =>
@@ -20,7 +19,6 @@ const FilterProducts = lazy(() =>
 
 const Home = () => {
   const { IsMobile } = useContext(GlobalContext);
-
   const [products, setProducts] = useState();
 
   let navigate = useNavigate();
@@ -54,17 +52,22 @@ const Home = () => {
         ></img>
         <div className="firstfoldcontent">
           <div className="firstfoldheader">Love the Planet we walk on.</div>
-          {!IsMobile && (<div className="firstfoldsubtitle">
-            Bibendum fermentum, aenean donec pretium aliquam blandit tempor
-            imperdiet arcu arcu ut nunc in dictum mauris at ut.
-          </div>)}
+          {!IsMobile && (
+            <div className="firstfoldsubtitle">
+              Bibendum fermentum, aenean donec pretium aliquam blandit tempor
+              imperdiet arcu arcu ut nunc in dictum mauris at ut.
+            </div>
+          )}
           <div className="buttons">
-            <Button className="mensbutton" onClick={() => routeChange("mens")}>
+            <Button
+              className="mensbutton"
+              onClick={() => routeChange("type=men")}
+            >
               SHOP MEN
             </Button>
             <Button
               className="womensbutton"
-              onClick={() => routeChange("womens")}
+              onClick={() => routeChange("type=women")}
             >
               SHOP WOMEN
             </Button>
@@ -93,7 +96,11 @@ const Home = () => {
       </div>
       <div className="bestsellers">
         <Suspense fallback={<div>Loading...</div>}>
-          {products && <FilterProducts config={{products:products, title: "BestSellers"}}></FilterProducts>}
+          {products && (
+            <FilterProducts
+              config={{ products: products, title: "BestSellers" }}
+            ></FilterProducts>
+          )}
         </Suspense>
       </div>
       <div className="menwomencard">
@@ -101,7 +108,10 @@ const Home = () => {
           <img className="cardbg" src={mensshoes} alt=""></img>
           <div className="cardcontent">
             <div className="cardtitle">Men</div>
-            <Button className="mensbutton" onClick={() => routeChange("mens")}>
+            <Button
+              className="mensbutton"
+              onClick={() => routeChange("type=men")}
+            >
               SHOP MEN
             </Button>
           </div>
@@ -112,7 +122,7 @@ const Home = () => {
             <div className="cardtitle">Women</div>
             <Button
               className="mensbutton"
-              onClick={() => routeChange("womens")}
+              onClick={() => routeChange("type=women")}
             >
               SHOP WOMEN
             </Button>
@@ -121,7 +131,11 @@ const Home = () => {
       </div>
       <div className="newarrivals">
         <Suspense fallback={<div>Loading...</div>}>
-          {products && <FilterProducts config={{products:products, title: "New Arrivals"}}></FilterProducts>}
+          {products && (
+            <FilterProducts
+              config={{ products: products, title: "New Arrivals" }}
+            ></FilterProducts>
+          )}
         </Suspense>
       </div>
     </div>
